@@ -254,6 +254,32 @@ public func expectNotContains<C: Collection>(
     }
 }
 
+/// Fail unless `key` is present in `dictionary`.
+public func expectContainsKey<K: Hashable, V>(
+    _ dictionary: [K: V],
+    _ key: K,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard dictionary.keys.contains(key) else {
+        throw failure(message ?? "Key is not present in the dictionary", expected: "a dictionary containing key \(key)", actual: String(describing: dictionary), file: file, line: line)
+    }
+}
+
+/// Fail if `key` is present in `dictionary`.
+public func expectNotContainsKey<K: Hashable, V>(
+    _ dictionary: [K: V],
+    _ key: K,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !dictionary.keys.contains(key) else {
+        throw failure(message ?? "Key is unexpectedly present in the dictionary", expected: "a dictionary without key \(key)", actual: String(describing: dictionary), file: file, line: line)
+    }
+}
+
 /// Require `body` to throw an error of type `E` and return it.
 public func expectThrows<E: Error>(
     _ type: E.Type,
