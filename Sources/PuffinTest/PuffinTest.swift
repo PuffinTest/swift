@@ -104,6 +104,32 @@ public func expectEndsWith(
     }
 }
 
+/// Fail if `actual` ends with `suffix`.
+public func expectNotEndsWith(
+    _ actual: String,
+    _ suffix: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !actual.hasSuffix(suffix) else {
+        throw failure(message ?? "Text unexpectedly ends with the suffix", expected: "text not ending with \(suffix)", actual: actual, file: file, line: line)
+    }
+}
+
+/// Fail if `actual` starts with `prefix`.
+public func expectNotStartsWith(
+    _ actual: String,
+    _ prefix: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !actual.hasPrefix(prefix) else {
+        throw failure(message ?? "Text unexpectedly starts with the prefix", expected: "text not starting with \(prefix)", actual: actual, file: file, line: line)
+    }
+}
+
 /// Fail unless two numbers are close under relative and absolute tolerances.
 public func expectClose(
     _ actual: Double,
