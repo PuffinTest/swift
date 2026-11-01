@@ -90,8 +90,10 @@ public func expectClose(
     guard relTolerance.isFinite, absTolerance.isFinite, relTolerance >= 0, absTolerance >= 0 else {
         throw failure("tolerances must be finite and nonnegative", file: file, line: line)
     }
+    let difference = abs(actual - expected)
+    let scale = max(abs(actual), abs(expected))
     let close = actual == expected || (actual.isFinite && expected.isFinite &&
-        abs(actual - expected) <= max(relTolerance * max(abs(actual), abs(expected)), absTolerance))
+        (difference <= absTolerance || (scale != 0 && difference / scale <= relTolerance)))
     guard close else {
         throw failure("Values are not close", expected: String(expected), actual: String(actual), file: file, line: line)
     }
