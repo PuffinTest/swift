@@ -126,6 +126,19 @@ public func expectContains<C: Collection>(
     }
 }
 
+/// Fail if `item` occurs in `collection`.
+public func expectNotContains<C: Collection>(
+    _ collection: C,
+    _ item: C.Element,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws where C.Element: Equatable {
+    guard !collection.contains(item) else {
+        throw failure(message ?? "Item is unexpectedly present in the collection", expected: "a collection without \(item)", actual: String(describing: collection), file: file, line: line)
+    }
+}
+
 /// Require `body` to throw an error of type `E` and return it.
 public func expectThrows<E: Error>(
     _ type: E.Type,
