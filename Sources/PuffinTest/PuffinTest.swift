@@ -78,6 +78,32 @@ public func expectNotEqual<T: Equatable>(
     }
 }
 
+/// Fail unless `actual` starts with `prefix`.
+public func expectStartsWith(
+    _ actual: String,
+    _ prefix: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.hasPrefix(prefix) else {
+        throw failure(message ?? "Text does not start with the expected prefix", expected: "text starting with \(prefix)", actual: actual, file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` ends with `suffix`.
+public func expectEndsWith(
+    _ actual: String,
+    _ suffix: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.hasSuffix(suffix) else {
+        throw failure(message ?? "Text does not end with the expected suffix", expected: "text ending with \(suffix)", actual: actual, file: file, line: line)
+    }
+}
+
 /// Fail unless two numbers are close under relative and absolute tolerances.
 public func expectClose(
     _ actual: Double,
