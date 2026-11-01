@@ -1,1 +1,28 @@
-# swift
+# PuffinTest for Swift
+
+PuffinTest is an early Swift package for named test cases and readable expectation failures. The initial implementation provides equality, inequality, truth, falsehood, collection membership, typed error expectations, explicit failure, tags, skips, name and tag filters, per-case hooks, fail-fast mode, sequential execution, and a status code.
+
+It uses Swift Package Manager and has not been published. The manifest uses Swift tools 5.9 or newer.
+
+## Run the example
+
+From this directory:
+
+```sh
+swift run puffintest-example
+```
+
+Declare cases with `test("name") { ... }`. Expectations throw errors, so mark the body `try`:
+
+```swift
+let cases = [
+    test("greets the user") {
+        try expectEqual("HELLO", "hello".uppercased())
+    }
+]
+let status = runTests(cases)
+```
+
+Each case runs independently. Expectation reports include the case, failed check, expected and actual values when available, and the call-site file and line. Other thrown errors include their type and message. `runTests` returns `1` when a case fails or no cases match; the executable example passes that result to the process exit function.
+
+This package is an early implementation and has not yet been verified. It uses Swift's `Equatable` protocol for equality, runs synchronous cases, and has no test target yet.
