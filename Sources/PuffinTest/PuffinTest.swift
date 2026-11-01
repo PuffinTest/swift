@@ -199,6 +199,21 @@ public func expectFalse(_ actual: Bool, _ message: String? = nil, file: StaticSt
     }
 }
 
+/// Fail unless `actual` is `nil`.
+public func expectNil<T>(_ actual: T?, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
+    guard case .none = actual else {
+        throw failure(message ?? "Expected nil", expected: "nil", actual: String(describing: actual), file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` contains a value, returning that value.
+public func expectNotNil<T>(_ actual: T?, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws -> T {
+    guard let value = actual else {
+        throw failure(message ?? "Expected a non-nil value", expected: "non-nil", actual: "nil", file: file, line: line)
+    }
+    return value
+}
+
 /// Fail unless `item` occurs in `collection`.
 public func expectContains<C: Collection>(
     _ collection: C,

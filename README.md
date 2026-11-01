@@ -20,6 +20,8 @@ let cases = [
         try expectEqual("HELLO", "hello".uppercased())
         try expectStartsWith("puffin test", "puffin")
         try expectLengthBetween(["north", "south"], 1, 3)
+        try expectNil(Optional<String>.none)
+        _ = try expectNotNil(Optional("puffin"))
         try expectBetween(4.5, 0, 5)
     }
 ]
