@@ -214,6 +214,20 @@ public func expectNotNil<T>(_ actual: T?, _ message: String? = nil, file: Static
     return value
 }
 
+/// Fail unless `actual` has no elements.
+public func expectEmpty<C: Collection>(_ actual: C, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
+    guard actual.isEmpty else {
+        throw failure(message ?? "Expected an empty value", expected: "0 items", actual: String(actual.count), file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` has at least one element.
+public func expectNotEmpty<C: Collection>(_ actual: C, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
+    guard !actual.isEmpty else {
+        throw failure(message ?? "Expected a non-empty value", expected: "at least 1 item", actual: "0", file: file, line: line)
+    }
+}
+
 /// Fail unless `item` occurs in `collection`.
 public func expectContains<C: Collection>(
     _ collection: C,
