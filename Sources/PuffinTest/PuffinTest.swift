@@ -280,6 +280,32 @@ public func expectNotContainsKey<K: Hashable, V>(
     }
 }
 
+/// Fail unless `actual` contains `substring`, using case-sensitive matching.
+public func expectContainsText(
+    _ actual: String,
+    _ substring: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.range(of: substring) != nil else {
+        throw failure(message ?? "Text does not contain the expected substring", expected: "text containing \(substring)", actual: actual, file: file, line: line)
+    }
+}
+
+/// Fail if `actual` contains `substring`, using case-sensitive matching.
+public func expectNotContainsText(
+    _ actual: String,
+    _ substring: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.range(of: substring) == nil else {
+        throw failure(message ?? "Text unexpectedly contains the substring", expected: "text without \(substring)", actual: actual, file: file, line: line)
+    }
+}
+
 /// Require `body` to throw an error of type `E` and return it.
 public func expectThrows<E: Error>(
     _ type: E.Type,
