@@ -52,6 +52,24 @@ private func failure(
     ExpectationFailure(message: message, expected: expected, actual: actual, file: "\(file)", line: line)
 }
 
+/// Fail unless `actual` has a length in the inclusive range.
+public func expectLengthBetween<C: Collection>(
+    _ actual: C,
+    _ minimum: Int,
+    _ maximum: Int,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard minimum >= 0, maximum >= 0, minimum <= maximum else {
+        throw failure("length bounds must be nonnegative and ordered", file: file, line: line)
+    }
+    let actualLength = actual.count
+    guard actualLength >= minimum, actualLength <= maximum else {
+        throw failure(message ?? "Value length is outside the expected range", expected: "length between \(minimum) and \(maximum), inclusive", actual: String(actualLength), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` equals `expected`.
 public func expectEqual<T: Equatable>(
     _ actual: T,

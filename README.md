@@ -19,6 +19,7 @@ let cases = [
     test("greets the user") {
         try expectEqual("HELLO", "hello".uppercased())
         try expectStartsWith("puffin test", "puffin")
+        try expectLengthBetween(["north", "south"], 1, 3)
         try expectBetween(4.5, 0, 5)
     }
 ]
@@ -27,4 +28,4 @@ let status = runTests(cases)
 
 Each case runs independently. Expectation reports include the case, failed check, expected and actual values when available, and the call-site file and line. Other thrown errors include their type and message. `runTests` returns `1` when a case fails or no cases match; the executable example passes that result to the process exit function.
 
-This package is an early implementation and has not yet been verified. It uses Swift's `Equatable` protocol for equality, compares string prefixes and suffixes with Swift's case-sensitive string APIs, runs synchronous cases, and has no test target yet.
+This package is an early implementation and has not yet been verified. It uses Swift's `Equatable` protocol for equality, compares string prefixes and suffixes with Swift's case-sensitive string APIs, counts collections using their native `count`, runs synchronous cases, and has no test target yet.
