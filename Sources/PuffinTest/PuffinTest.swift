@@ -78,6 +78,25 @@ public func expectNotEqual<T: Equatable>(
     }
 }
 
+/// Fail unless two numbers are close under relative and absolute tolerances.
+public func expectClose(
+    _ actual: Double,
+    _ expected: Double,
+    relTolerance: Double = 1e-9,
+    absTolerance: Double = 0,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard relTolerance.isFinite, absTolerance.isFinite, relTolerance >= 0, absTolerance >= 0 else {
+        throw failure("tolerances must be finite and nonnegative", file: file, line: line)
+    }
+    let close = actual == expected || (actual.isFinite && expected.isFinite &&
+        abs(actual - expected) <= max(relTolerance * max(abs(actual), abs(expected)), absTolerance))
+    guard close else {
+        throw failure("Values are not close", expected: String(expected), actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is true.
 public func expectTrue(_ actual: Bool, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
     guard actual else {
