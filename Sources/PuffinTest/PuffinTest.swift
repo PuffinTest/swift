@@ -201,6 +201,32 @@ public func expectBetween(
     }
 }
 
+/// Fail unless `actual` is strictly greater than `threshold`.
+public func expectGreaterThan(
+    _ actual: Double,
+    _ threshold: Double,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual > threshold else {
+        throw failure(message ?? "Value is not greater than the threshold", expected: "greater than \(threshold)", actual: String(actual), file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` is strictly less than `threshold`.
+public func expectLessThan(
+    _ actual: Double,
+    _ threshold: Double,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual < threshold else {
+        throw failure(message ?? "Value is not less than the threshold", expected: "less than \(threshold)", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is true.
 public func expectTrue(_ actual: Bool, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
     guard actual else {

@@ -15,6 +15,8 @@ let status = runTests([
         try expectContains(["puffin", "tern"], "puffin")
         try expectMatches("order-4821 accepted", "order-\\d+ accepted")
         try expectNotMatches("request failed", "\\b2xx\\b")
+        try expectGreaterThan(5, 3)
+        try expectLessThan(2, 3)
     },
 ])
 exit(Int32(status))
