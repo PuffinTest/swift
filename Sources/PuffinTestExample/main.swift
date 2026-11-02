@@ -19,6 +19,7 @@ let status = runTests([
         try expectLessThan(2, 3)
         try expectAtLeast(3, 3)
         try expectAtMost(3, 3)
+        try expectNotBetween(4, 1, 3)
     },
 ])
 exit(Int32(status))

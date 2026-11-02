@@ -201,6 +201,23 @@ public func expectBetween(
     }
 }
 
+/// Fail if `actual` is in the inclusive range.
+public func expectNotBetween(
+    _ actual: Double,
+    _ minimum: Double,
+    _ maximum: Double,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !minimum.isNaN, !maximum.isNaN, minimum <= maximum else {
+        throw failure("minimum must be less than or equal to maximum", file: file, line: line)
+    }
+    guard actual < minimum || actual > maximum else {
+        throw failure(message ?? "Value is inside the unexpected range", expected: "outside [\(minimum), \(maximum)]", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is strictly greater than `threshold`.
 public func expectGreaterThan(
     _ actual: Double,
