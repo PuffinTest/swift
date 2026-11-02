@@ -24,6 +24,8 @@ let status = runTests([
         try expectFinite(3.14)
         try expectNaN(Double.nan)
         try expectNotNaN(3.14)
+        try expectInfinite(Double.infinity)
+        try expectNotInfinite(3.14)
     },
 ])
 exit(Int32(status))

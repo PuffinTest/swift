@@ -250,6 +250,28 @@ public func expectNotNaN(
     }
 }
 
+/// Fail unless `actual` is positive or negative infinity.
+public func expectInfinite(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.isInfinite else {
+        throw failure("Value is not infinite", expected: "positive or negative infinity", actual: String(actual), file: file, line: line)
+    }
+}
+
+/// Fail if `actual` is positive or negative infinity.
+public func expectNotInfinite(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !actual.isInfinite else {
+        throw failure("Value is unexpectedly infinite", expected: "not infinity", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is between `minimum` and `maximum`, inclusive.
 public func expectBetween(
     _ actual: Double,
