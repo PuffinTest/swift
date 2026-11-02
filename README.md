@@ -22,6 +22,7 @@ let cases = [
         try expectEqual("HELLO", "hello".uppercased())
         try expectStartsWith("puffin test", "puffin")
         try expectLengthBetween(["north", "south"], 1, 3)
+        try expectLength(["north", "south"], 2)
         try expectNil(Optional<String>.none)
         _ = try expectNotNil(Optional("puffin"))
         try expectEmpty([String]())

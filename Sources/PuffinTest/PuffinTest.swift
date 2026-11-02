@@ -70,6 +70,22 @@ public func expectLengthBetween<C: Collection>(
     }
 }
 
+/// Fail unless `actual` has exactly `expected` elements.
+public func expectLength<C: Collection>(
+    _ actual: C,
+    _ expected: Int,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard expected >= 0 else {
+        throw failure("expected length must be nonnegative", file: file, line: line)
+    }
+    guard actual.count == expected else {
+        throw failure(message ?? "Value has an unexpected length", expected: String(expected), actual: String(actual.count), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` equals `expected`.
 public func expectEqual<T: Equatable>(
     _ actual: T,
