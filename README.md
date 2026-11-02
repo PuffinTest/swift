@@ -15,6 +15,8 @@ swift run puffintest-example
 Declare cases with `test("name") { ... }`. Expectations throw errors, so mark the body `try`:
 
 ```swift
+import Foundation
+
 let cases = [
     test("greets the user") {
         try expectEqual("HELLO", "hello".uppercased())
@@ -28,6 +30,8 @@ let cases = [
         try expectNotContainsKey(["puffin": 1], "tern")
         try expectContainsText("puffin test", "test")
         try expectNotContainsText("puffin test", "penguin")
+        let error = NSError(domain: "puffin", code: 1, userInfo: [NSLocalizedDescriptionKey: "missing puffin"])
+        try expectErrorMessage(error, "puffin")
         try expectBetween(4.5, 0, 5)
     }
 ]
