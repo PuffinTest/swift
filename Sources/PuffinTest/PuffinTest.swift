@@ -323,6 +323,20 @@ public func expectThrows<E: Error>(
     throw failure("Expected \(E.self) to be thrown", expected: String(describing: E.self), actual: "no error", file: file, line: line)
 }
 
+/// Fail unless `substring` occurs in the error's descriptive text.
+public func expectErrorMessage(
+    _ error: Error,
+    _ substring: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    let actual = String(describing: error)
+    guard actual.contains(substring) else {
+        throw failure(message ?? "Error message does not contain the expected text", expected: "error message containing \(substring)", actual: actual, file: file, line: line)
+    }
+}
+
 /// Explicitly fail the current test case.
 public func fail(_ message: String = "Explicit failure", file: StaticString = #fileID, line: UInt = #line) throws {
     throw failure(message, file: file, line: line)
