@@ -1,6 +1,6 @@
 # PuffinTest for Swift
 
-PuffinTest is an early Swift package for named test cases and readable expectation failures. The initial implementation provides equality, inequality, strict and inclusive numeric threshold checks, positive and negative inclusive range checks and approximate numeric checks, truth, falsehood, positive and negative string prefix and suffix checks, positive and negative collection membership, dictionary key checks, case-sensitive string-substring and error-message checks, typed error expectations, explicit failure, tags, skips, name and tag filters, per-case hooks, fail-fast mode, sequential execution, and a status code.
+PuffinTest is an early Swift package for named test cases and readable expectation failures. The initial implementation provides equality, inequality, strict and inclusive numeric threshold checks, positive and negative inclusive range checks and approximate numeric checks in both directions, truth, falsehood, positive and negative string prefix and suffix checks, positive and negative collection membership, dictionary key checks, case-sensitive string-substring and error-message checks, typed error expectations, explicit failure, tags, skips, name and tag filters, per-case hooks, fail-fast mode, sequential execution, and a status code.
 
 It uses Swift Package Manager and has not been published. The manifest uses Swift tools 5.9 or newer.
 

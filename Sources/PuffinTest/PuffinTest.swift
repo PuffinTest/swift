@@ -185,6 +185,27 @@ public func expectClose(
     }
 }
 
+/// Fail if two numbers are close within relative or absolute tolerance.
+public func expectNotClose(
+    _ actual: Double,
+    _ expected: Double,
+    relTolerance: Double = 1e-9,
+    absTolerance: Double = 0,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard relTolerance.isFinite, absTolerance.isFinite, relTolerance >= 0, absTolerance >= 0 else {
+        throw failure("tolerances must be finite and nonnegative", file: file, line: line)
+    }
+    let difference = abs(actual - expected)
+    let scale = max(abs(actual), abs(expected))
+    let close = actual == expected || (actual.isFinite && expected.isFinite &&
+        (difference <= absTolerance || (scale != 0 && difference / scale <= relTolerance)))
+    guard !close else {
+        throw failure("Values are unexpectedly close", expected: "not close to \(expected)", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is between `minimum` and `maximum`, inclusive.
 public func expectBetween(
     _ actual: Double,
