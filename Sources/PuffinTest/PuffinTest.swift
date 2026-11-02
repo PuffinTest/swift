@@ -227,6 +227,32 @@ public func expectLessThan(
     }
 }
 
+/// Fail unless `actual` is greater than or equal to `threshold`.
+public func expectAtLeast(
+    _ actual: Double,
+    _ threshold: Double,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual >= threshold else {
+        throw failure(message ?? "Value is below the minimum threshold", expected: "at least \(threshold)", actual: String(actual), file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` is less than or equal to `threshold`.
+public func expectAtMost(
+    _ actual: Double,
+    _ threshold: Double,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual <= threshold else {
+        throw failure(message ?? "Value is above the maximum threshold", expected: "at most \(threshold)", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is true.
 public func expectTrue(_ actual: Bool, _ message: String? = nil, file: StaticString = #fileID, line: UInt = #line) throws {
     guard actual else {

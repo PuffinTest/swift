@@ -17,6 +17,8 @@ let status = runTests([
         try expectNotMatches("request failed", "\\b2xx\\b")
         try expectGreaterThan(5, 3)
         try expectLessThan(2, 3)
+        try expectAtLeast(3, 3)
+        try expectAtMost(3, 3)
     },
 ])
 exit(Int32(status))
