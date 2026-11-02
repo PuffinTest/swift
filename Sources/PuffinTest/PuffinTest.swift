@@ -206,6 +206,28 @@ public func expectNotClose(
     }
 }
 
+/// Fail unless `actual` is finite (neither NaN nor infinity).
+public func expectFinite(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.isFinite else {
+        throw failure("Value is not finite", expected: "a finite number", actual: String(actual), file: file, line: line)
+    }
+}
+
+/// Fail unless `actual` is NaN or positive or negative infinity.
+public func expectNotFinite(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !actual.isFinite else {
+        throw failure("Value is unexpectedly finite", expected: "NaN or infinity", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is between `minimum` and `maximum`, inclusive.
 public func expectBetween(
     _ actual: Double,
