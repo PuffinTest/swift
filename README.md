@@ -33,12 +33,14 @@ let cases = [
         try expectNotContainsText("puffin test", "penguin")
         let error = NSError(domain: "puffin", code: 1, userInfo: [NSLocalizedDescriptionKey: "missing puffin"])
         try expectErrorMessage(error, "puffin")
+        try expectMatches("order-4821 accepted", "order-\\d+ accepted")
+        try expectNotMatches("request failed", "\\b2xx\\b")
         try expectBetween(4.5, 0, 5)
     }
 ]
 let status = runTests(cases)
 ```
 
-Each case runs independently. Expectation reports include the case, failed check, expected and actual values when available, and the call-site file and line. Other thrown errors include their type and message. `runTests` returns `1` when a case fails or no cases match; the executable example passes that result to the process exit function.
+Each case runs independently. Expectation reports include the case, failed check, expected and actual values when available, and the call-site file and line. Other thrown errors include their type and message. `expectMatches` and `expectNotMatches` search with Foundation regular expressions and throw on invalid patterns. `runTests` returns `1` when a case fails or no cases match; the executable example passes that result to the process exit function.
 
 This package is an early implementation and has not yet been verified. It uses Swift's `Equatable` protocol for equality, compares string prefixes and suffixes with Swift's case-sensitive string APIs, counts collections using their native `count`, runs synchronous cases, and has no test target yet.

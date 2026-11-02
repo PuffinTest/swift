@@ -353,6 +353,36 @@ public func expectErrorMessage(
     }
 }
 
+/// Fail unless the regular expression matches somewhere in `actual`.
+public func expectMatches(
+    _ actual: String,
+    _ pattern: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    let expression = try NSRegularExpression(pattern: pattern)
+    let range = NSRange(actual.startIndex..<actual.endIndex, in: actual)
+    guard expression.firstMatch(in: actual, range: range) != nil else {
+        throw failure(message ?? "Text does not match the expected pattern", expected: "text matching \(pattern)", actual: actual, file: file, line: line)
+    }
+}
+
+/// Fail if the regular expression matches anywhere in `actual`.
+public func expectNotMatches(
+    _ actual: String,
+    _ pattern: String,
+    _ message: String? = nil,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    let expression = try NSRegularExpression(pattern: pattern)
+    let range = NSRange(actual.startIndex..<actual.endIndex, in: actual)
+    guard expression.firstMatch(in: actual, range: range) == nil else {
+        throw failure(message ?? "Text unexpectedly matches the pattern", expected: "text not matching \(pattern)", actual: actual, file: file, line: line)
+    }
+}
+
 /// Explicitly fail the current test case.
 public func fail(_ message: String = "Explicit failure", file: StaticString = #fileID, line: UInt = #line) throws {
     throw failure(message, file: file, line: line)
