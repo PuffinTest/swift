@@ -22,6 +22,8 @@ let status = runTests([
         try expectNotBetween(4, 1, 3)
         try expectNotClose(0.1, 0.9)
         try expectFinite(3.14)
+        try expectNaN(Double.nan)
+        try expectNotNaN(3.14)
     },
 ])
 exit(Int32(status))

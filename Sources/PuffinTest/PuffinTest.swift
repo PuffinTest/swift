@@ -228,6 +228,28 @@ public func expectNotFinite(
     }
 }
 
+/// Fail unless `actual` is NaN.
+public func expectNaN(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard actual.isNaN else {
+        throw failure("Value is not NaN", expected: "NaN", actual: String(actual), file: file, line: line)
+    }
+}
+
+/// Fail if `actual` is NaN.
+public func expectNotNaN(
+    _ actual: Double,
+    file: StaticString = #fileID,
+    line: UInt = #line
+) throws {
+    guard !actual.isNaN else {
+        throw failure("Value is unexpectedly NaN", expected: "not NaN", actual: String(actual), file: file, line: line)
+    }
+}
+
 /// Fail unless `actual` is between `minimum` and `maximum`, inclusive.
 public func expectBetween(
     _ actual: Double,
